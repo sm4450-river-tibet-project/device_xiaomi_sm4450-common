@@ -47,15 +47,22 @@ TARGET_KERNEL_ADDITIONAL_FLAGS := TARGET_PRODUCT=$(PRODUCT_DEVICE)
 # Kernel modules
 # The lists live in the kernel repo under modules-lists/, generated for the
 # parrot board. They must reference modules the parrot configs actually build.
-first_stage_modules := $(strip $(shell cat $(TARGET_KERNEL_SOURCE)/modules-lists/modules.list.msm.parrot))
+first_stage_modules := $(strip $(shell cat $(TARGET_KERNEL_SOURCE)/modules.list.msm.parrot))
 
 BOARD_VENDOR_RAMDISK_KERNEL_MODULES_LOAD += $(first_stage_modules)
 BOARD_VENDOR_RAMDISK_RECOVERY_KERNEL_MODULES_LOAD += $(first_stage_modules)
 BOOT_KERNEL_MODULES += $(first_stage_modules)
 
-BOARD_VENDOR_KERNEL_MODULES_BLOCKLIST_FILE := $(TARGET_KERNEL_SOURCE)/modules-lists/modules.vendor_blocklist.msm.parrot
+BOARD_VENDOR_KERNEL_MODULES_BLOCKLIST_FILE := $(TARGET_KERNEL_SOURCE)/modules.vendor_blocklist.msm.parrot
 BOARD_VENDOR_RAMDISK_KERNEL_MODULES_BLOCKLIST_FILE := $(BOARD_VENDOR_KERNEL_MODULES_BLOCKLIST_FILE)
-BOARD_SYSTEM_KERNEL_MODULES_BLOCKLIST_FILE := $(TARGET_KERNEL_SOURCE)/modules-lists/modules.systemdlkm_blocklist.msm.parrot
+BOARD_SYSTEM_KERNEL_MODULES_BLOCKLIST_FILE := $(TARGET_KERNEL_SOURCE)/modules.systemdlkm_blocklist.msm.parrot
+
+# External kernel modules (built out-of-tree against the sky 6.12 kernel).
+# xiaomi/ carries the vendor modules ported from sky-t-oss 5.10.
+TARGET_KERNEL_EXT_MODULE_ROOT := kernel/xiaomi/sky-modules
+TARGET_KERNEL_EXT_MODULES := \
+    xiaomi
+
 
 BOARD_VENDOR_RAMDISK_FRAGMENTS := dlkm
 BOARD_VENDOR_RAMDISK_FRAGMENT.dlkm.KERNEL_MODULE_DIRS := top
