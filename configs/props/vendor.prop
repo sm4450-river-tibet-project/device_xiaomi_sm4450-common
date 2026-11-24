@@ -1,0 +1,16 @@
+#
+# SPDX-FileCopyrightText: The LineageOS Project
+# SPDX-License-Identifier: Apache-2.0
+#
+
+# SoC
+ro.vendor.qti.va_aosp.support=1
+ro.vendor.qti.soc_name=parrot
+ro.vendor.qti.soc_model=SM4450
+
+# Display
+debug.sf.enable_hwc_vds=1
+debug.sf.hw=1
+
+# Gralloc
+ro.vendor.qti.sys.fw.bservice_enable=true
