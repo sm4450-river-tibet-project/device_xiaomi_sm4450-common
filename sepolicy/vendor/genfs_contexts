@@ -1,0 +1,14 @@
+# Xiaomi genfs contexts for sky (Redmi 12 5G)
+
+# Display feature
+genfscon sysfs /devices/virtual/displayfeature u:object_r:vendor_sysfs_displayfeature:s0
+
+# Thermal
+genfscon sysfs /devices/platform/soc/soc:thermal_message u:object_r:sys_thermal_wifi_limit:s0
+
+# Touch
+genfscon sysfs /devices/virtual/touch/touch_dev u:object_r:vendor_sysfs_touch:s0
+genfscon sysfs /devices/virtual/touch/touch_dev/fod_finger_state u:object_r:vendor_sysfs_touch:s0
+genfscon sysfs /devices/virtual/touch/touch_dev/gesture_double_tap_enabled u:object_r:vendor_sysfs_touch:s0
+genfscon sysfs /devices/virtual/touch/touch_dev/gesture_single_tap_enabled u:object_r:vendor_sysfs_touch:s0
+genfscon sysfs /devices/virtual/touch/touch_dev/bump_sample_rate u:object_r:vendor_sysfs_touch:s0

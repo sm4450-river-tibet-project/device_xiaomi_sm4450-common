@@ -1,0 +1,30 @@
+# Xiaomi-specific file types for sky (Redmi 12 5G)
+#
+# Types consumed by the stock vendor sepolicy are declared in the vendor CIL
+# blob (vendor/etc/selinux/vendor_sepolicy.cil), so only Xiaomi additions that
+# the blob list installs belong here.
+
+# Display
+type vendor_sysfs_displayfeature, fs_type, sysfs_type;
+
+# Touch
+type vendor_touch_data_file, data_file_type, file_type;
+
+# Xiaomi hardware services
+type vendor_hal_displayfeature_hwservice, hwservice_manager_type;
+type hal_touchfeature_hwservice, hwservice_manager_type;
+type vendor_hal_micharge_hwservice, hwservice_manager_type;
+type vendor_hal_misys_hwservice, hwservice_manager_type;
+type vendor_hal_mimd_hwservice, hwservice_manager_type;
+type vendor_hal_cld_hwservice, hwservice_manager_type;
+type vendor_hal_otrpagent_hwservice, hwservice_manager_type;
+
+# Thermal
+type vendor_thermal_data_file, data_file_type, file_type;
+type sys_thermal_wifi_limit, fs_type, sysfs_type;
+
+# Millet (Xiaomi power/performance framework)
+type vendor_millet_data_file, data_file_type, file_type;
+
+# Charge
+type vendor_micharge_data_file, data_file_type, file_type;

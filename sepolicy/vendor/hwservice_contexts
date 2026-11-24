@@ -1,0 +1,22 @@
+# Xiaomi hardware service contexts for sky (Redmi 12 5G)
+
+# Display feature
+vendor.xiaomi.hardware.displayfeature::IDisplayFeature u:object_r:vendor_hal_displayfeature_hwservice:s0
+
+# Touch feature
+vendor.xiaomi.hardware.touchfeature::ITouchFeature u:object_r:hal_touchfeature_hwservice:s0
+
+# Charge
+vendor.xiaomi.hardware.micharge::IMiCharge u:object_r:vendor_hal_micharge_hwservice:s0
+
+# Sys
+vendor.xiaomi.hardware.misys::IMiSys u:object_r:vendor_hal_misys_hwservice:s0
+
+# MD
+vendor.xiaomi.hardware.mimd::IMiMd u:object_r:vendor_hal_mimd_hwservice:s0
+
+# CLD
+vendor.xiaomi.hardware.cld::ICld u:object_r:vendor_hal_cld_hwservice:s0
+
+# OTG RPAgent
+vendor.xiaomi.hardware.otrpagent::IOtgRpAgent u:object_r:vendor_hal_otrpagent_hwservice:s0

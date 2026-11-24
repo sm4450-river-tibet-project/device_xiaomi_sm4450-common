@@ -1,0 +1,22 @@
+//
+// Copyright (C) 2026 The LineageOS Project
+//
+// SPDX-License-Identifier: Apache-2.0
+//
+
+cc_library_shared {
+    name: "libinit_sm4450",
+    vendor: true,
+    srcs: ["init_sm4450.cpp"],
+    header_libs: ["libbase_headers"],
+    shared_libs: [
+        "libbase",
+        "liblog",
+        "libutils",
+    ],
+    cflags: [
+        "-Wall",
+        "-Werror",
+        "-Wextra",
+    ],
+}

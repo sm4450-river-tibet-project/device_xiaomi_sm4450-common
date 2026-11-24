@@ -73,12 +73,15 @@ BOARD_USES_METADATA_PARTITION := true
 
 # SELinux
 BOARD_VENDOR_SEPOLICY_DIRS += $(COMMON_PATH)/sepolicy/vendor
-BOARD_PRODUCT_SEPOLICY_DIRS += $(COMMON_PATH)/sepolicy/product
 
 # VINTF
-DEVICE_MANIFEST_FILE += $(COMMON_PATH)/configs/vintf/manifest.xml
-DEVICE_MATRIX_FILE += $(COMMON_PATH)/configs/vintf/compatibility_matrix.xml
-DEVICE_FRAMEWORK_COMPATIBILITY_MATRIX_FILE += $(COMMON_PATH)/configs/vintf/framework_compatibility_matrix.xml
+# The device manifest is generated from the stock vendor image, matching the
+# sm8450-common convention.
+DEVICE_MANIFEST_FILE := $(COMMON_PATH)/vintf/manifest_ravelin.xml
+DEVICE_MATRIX_FILE := hardware/qcom-caf/common/compatibility_matrix.xml
+DEVICE_FRAMEWORK_COMPATIBILITY_MATRIX_FILE := \
+    hardware/qcom-caf/common/framework_compatibility_matrix.xml \
+    $(COMMON_PATH)/vintf/framework_compatibility_matrix.xml
 
 # Properties
 TARGET_SYSTEM_PROP += $(COMMON_PATH)/configs/props/system.prop

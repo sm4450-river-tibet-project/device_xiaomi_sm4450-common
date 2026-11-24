@@ -1,0 +1,41 @@
+# Xiaomi HAL file contexts for sky (Redmi 12 5G)
+#
+# Only labels that differ from the stock vendor policy live here. The stock
+# vendor image already installs vendor_file_contexts, so anything not listed
+# keeps its shipped label.
+
+# Display feature
+/(vendor|system/vendor)/bin/hw/vendor\.xiaomi\.hardware\.displayfeature@1\.0-service u:object_r:vendor_hal_displayfeature_default_exec:s0
+
+# Touch feature
+/(vendor|system/vendor)/bin/hw/vendor\.xiaomi\.hardware\.touchfeature@1\.0-service u:object_r:hal_touchfeature_default_exec:s0
+
+# Charge
+/(vendor|system/vendor)/bin/hw/vendor\.xiaomi\.hardware\.micharge@1\.0-service u:object_r:vendor_hal_micharge_default_exec:s0
+
+# Sys
+/(vendor|system/vendor)/bin/hw/vendor\.xiaomi\.hardware\.misys@[0-9]+\.[0-9]+-service u:object_r:vendor_hal_misys_default_exec:s0
+
+# MD (device management)
+/(vendor|system/vendor)/bin/hw/vendor\.xiaomi\.hardware\.mimd@1\.0-service u:object_r:vendor_hal_mimd_default_exec:s0
+
+# CLD
+/(vendor|system/vendor)/bin/hw/vendor\.xiaomi\.hardware\.cld@1\.0-service u:object_r:vendor_hal_cld_default_exec:s0
+
+# OTG RPAgent
+/(vendor|system/vendor)/bin/vendor\.xiaomi\.hardware\.otrpagent@2\.0-service u:object_r:vendor_hal_otrpagent_default_exec:s0
+
+# Thermal
+/(vendor|system/vendor)/bin/mi_thermald u:object_r:vendor_mi_thermald_exec:s0
+/(vendor|system/vendor)/bin/thermal-engine-v2 u:object_r:vendor_thermal_engine_exec:s0
+
+# Sysfs: display feature
+/sys/devices/virtual/displayfeature(/.*)? u:object_r:vendor_sysfs_displayfeature:s0
+
+# Sysfs: thermal
+/sys/class/thermal/thermal_message(/.*)? u:object_r:sys_thermal_wifi_limit:s0
+
+# Data
+/data/vendor/millet(/.*)? u:object_r:vendor_millet_data_file:s0
+/data/vendor/micharge(/.*)? u:object_r:vendor_micharge_data_file:s0
+/data/vendor/touch(/.*)? u:object_r:vendor_touch_data_file:s0

@@ -1,0 +1,51 @@
+# Xiaomi HAL domains for sky (Redmi 12 5G)
+#
+# The stock vendor image ships its own CIL policy for these services, but in a
+# LineageOS build the binaries are re-labelled by our file_contexts. Under
+# LineageOS the "vendor_" prefixed attribute comes from
+# system/sepolicy/public/vendor_type.te via the vendor policy, so we declare the
+# domains locally and inherit the usual HAL attributes.
+
+# Display feature
+type vendor_hal_displayfeature_default, domain;
+type vendor_hal_displayfeature_default_exec, exec_type, vendor_file_type, file_type;
+init_daemon_domain(vendor_hal_displayfeature_default)
+
+# Touch feature
+type hal_touchfeature_default, domain;
+type hal_touchfeature_default_exec, exec_type, vendor_file_type, file_type;
+init_daemon_domain(hal_touchfeature_default)
+
+# Charge
+type vendor_hal_micharge_default, domain;
+type vendor_hal_micharge_default_exec, exec_type, vendor_file_type, file_type;
+init_daemon_domain(vendor_hal_micharge_default)
+
+# Sys
+type vendor_hal_misys_default, domain;
+type vendor_hal_misys_default_exec, exec_type, vendor_file_type, file_type;
+init_daemon_domain(vendor_hal_misys_default)
+
+# MD
+type vendor_hal_mimd_default, domain;
+type vendor_hal_mimd_default_exec, exec_type, vendor_file_type, file_type;
+init_daemon_domain(vendor_hal_mimd_default)
+
+# CLD
+type vendor_hal_cld_default, domain;
+type vendor_hal_cld_default_exec, exec_type, vendor_file_type, file_type;
+init_daemon_domain(vendor_hal_cld_default)
+
+# OTG RPAgent
+type vendor_hal_otrpagent_default, domain;
+type vendor_hal_otrpagent_default_exec, exec_type, vendor_file_type, file_type;
+init_daemon_domain(vendor_hal_otrpagent_default)
+
+# Thermal
+type vendor_mi_thermald, domain;
+type vendor_mi_thermald_exec, exec_type, vendor_file_type, file_type;
+init_daemon_domain(vendor_mi_thermald)
+
+type vendor_thermal_engine, domain;
+type vendor_thermal_engine_exec, exec_type, vendor_file_type, file_type;
+init_daemon_domain(vendor_thermal_engine)
