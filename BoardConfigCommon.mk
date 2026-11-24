@@ -44,6 +44,12 @@ TARGET_KERNEL_SOURCE := kernel/xiaomi/sky
 TARGET_KERNEL_VERSION := 6.12
 TARGET_KERNEL_ADDITIONAL_FLAGS := TARGET_PRODUCT=$(PRODUCT_DEVICE)
 
+# gki_defconfig is the base; the vendor fragment adds the parrot/ravelin
+# platform and all the =m symbols the module list needs.
+TARGET_KERNEL_CONFIG := \
+    gki_defconfig \
+    vendor/parrot_perf.config
+
 # Kernel modules
 # The lists live in the kernel repo under modules-lists/, generated for the
 # parrot board. They must reference modules the parrot configs actually build.
