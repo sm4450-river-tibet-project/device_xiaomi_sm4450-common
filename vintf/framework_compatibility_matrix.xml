@@ -4,8 +4,8 @@
      SPDX-License-Identifier: Apache-2.0
 
      Framework compatibility matrix additions for SM4450 (parrot) / ravelin.
-     The QCRIL NV-option interface is optional: some firmware revisions do not
-     export it, so the framework must not require it.
+     The QCRIL NV-option interface is optional: firmware revisions differ in
+     whether they export it, so the framework must not require it.
 -->
 <compatibility-matrix version="1.0" type="framework">
     <hal format="aidl" optional="true">

@@ -129,11 +129,10 @@ BOARD_VENDOR_SEPOLICY_DIRS += $(COMMON_PATH)/sepolicy/vendor
 DEVICE_MANIFEST_FILE := $(COMMON_PATH)/vintf/manifest_ravelin.xml
 DEVICE_MATRIX_FILE := hardware/qcom-caf/common/compatibility_matrix.xml
 DEVICE_FRAMEWORK_COMPATIBILITY_MATRIX_FILE := \
-    hardware/qcom-caf/common/framework_compatibility_matrix.xml \
+    hardware/qcom-caf/common/vendor_framework_compatibility_matrix.xml \
     $(COMMON_PATH)/vintf/framework_compatibility_matrix.xml
 
 # Properties
-TARGET_SYSTEM_PROP += $(COMMON_PATH)/configs/props/system.prop
 TARGET_VENDOR_PROP += $(COMMON_PATH)/configs/props/vendor.prop
 TARGET_PRODUCT_PROP += $(COMMON_PATH)/configs/props/product.prop
 

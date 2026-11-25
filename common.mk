@@ -368,14 +368,9 @@ PRODUCT_COPY_FILES += \
     vendor/qcom/opensource/vibrator/excluded-input-devices.xml:$(TARGET_COPY_OUT_VENDOR)/etc/excluded-input-devices.xml
 
 # VINTF
-DEVICE_FRAMEWORK_COMPATIBILITY_MATRIX_FILE += \
-    $(COMMON_PATH)/configs/vintf/framework_compatibility_matrix.xml \
-    hardware/xiaomi/vintf/xiaomi_framework_compatibility_matrix.xml \
-    hardware/qcom-caf/common/vendor_framework_compatibility_matrix.xml
-DEVICE_MANIFEST_FILE += \
-    $(COMMON_PATH)/configs/vintf/manifest_ravelin.xml \
-    $(AUDIO_HAL_DIR)/configs/parrot/manifest_audio_qti_services.xml
-DEVICE_MATRIX_FILE := hardware/qcom-caf/common/compatibility_matrix_aidl.xml
+# The manifest and both matrices are declared in BoardConfigCommon.mk, which is
+# the only place they should be set: a second assignment here would silently
+# override the board values.
 
 # Virtualization
 $(call inherit-product, packages/modules/Virtualization/apex/product_packages.mk)
