@@ -51,23 +51,59 @@ TARGET_KERNEL_CONFIG := \
     vendor/parrot_perf.config
 
 # Kernel modules
-# The lists live in the kernel repo under modules-lists/, generated for the
-# parrot board. They must reference modules the parrot configs actually build.
-first_stage_modules := $(strip $(shell cat $(TARGET_KERNEL_SOURCE)/modules.list.msm.parrot))
-
-BOARD_VENDOR_RAMDISK_KERNEL_MODULES_LOAD += $(first_stage_modules)
-BOARD_VENDOR_RAMDISK_RECOVERY_KERNEL_MODULES_LOAD += $(first_stage_modules)
-BOOT_KERNEL_MODULES += $(first_stage_modules)
+# modules.list.msm.parrot in the kernel repo is the build list: it tells the
+# kernel build which modules to produce. The load lists below are separate
+# and say which produced module goes into which partition image.
+BOARD_VENDOR_RAMDISK_KERNEL_MODULES_LOAD := $(strip $(shell cat $(COMMON_PATH)/configs/modules/modules.load.vendorboot))
+BOARD_VENDOR_RAMDISK_RECOVERY_KERNEL_MODULES_LOAD := $(strip $(shell cat $(COMMON_PATH)/configs/modules/modules.load.recovery))
+BOOT_KERNEL_MODULES := $(BOARD_VENDOR_RAMDISK_RECOVERY_KERNEL_MODULES_LOAD)
 
 BOARD_VENDOR_KERNEL_MODULES_BLOCKLIST_FILE := $(TARGET_KERNEL_SOURCE)/modules.vendor_blocklist.msm.parrot
 BOARD_VENDOR_RAMDISK_KERNEL_MODULES_BLOCKLIST_FILE := $(BOARD_VENDOR_KERNEL_MODULES_BLOCKLIST_FILE)
 BOARD_SYSTEM_KERNEL_MODULES_BLOCKLIST_FILE := $(TARGET_KERNEL_SOURCE)/modules.systemdlkm_blocklist.msm.parrot
 
+# Module load lists. These tell the build which modules go into which
+# partition, and they are what the init scripts read at boot.
+#
+# modules.load              -> vendor_dlkm
+# modules.load.vendorboot   -> vendor_boot ramdisk
+# modules.load.recovery     -> recovery ramdisk
+# modules.load.system_dlkm  -> system_dlkm
+BOARD_VENDOR_KERNEL_MODULES_LOAD := $(strip $(shell cat $(COMMON_PATH)/configs/modules/modules.load))
+BOARD_SYSTEM_KERNEL_MODULES_LOAD := $(strip $(shell cat $(COMMON_PATH)/configs/modules/modules.load.system_dlkm))
+
 # External kernel modules (built out-of-tree against the sky 6.12 kernel).
-# xiaomi/ carries the vendor modules ported from sky-t-oss 5.10.
+# The list mirrors what the platform build wires: the xiaomi vendor modules
+# plus every techpack whose modules appear in modules.list.msm.parrot.
 TARGET_KERNEL_EXT_MODULE_ROOT := kernel/xiaomi/sky-modules
 TARGET_KERNEL_EXT_MODULES := \
-    xiaomi
+    xiaomi \
+    qcom/opensource/mmrm-driver \
+    qcom/opensource/mm-drivers/msm_ext_display \
+    qcom/opensource/mm-drivers/sync_fence \
+    qcom/opensource/audio-kernel \
+    qcom/opensource/securemsm-kernel \
+    qcom/opensource/synx-kernel \
+    qcom/opensource/camera-kernel \
+    qcom/opensource/datarmnet-ext/mem \
+    qcom/opensource/dataipa/drivers/platform/msm \
+    qcom/opensource/datarmnet/core \
+    qcom/opensource/datarmnet-ext/aps \
+    qcom/opensource/datarmnet-ext/offload \
+    qcom/opensource/datarmnet-ext/perf \
+    qcom/opensource/datarmnet-ext/perf_tether \
+    qcom/opensource/datarmnet-ext/sch \
+    qcom/opensource/datarmnet-ext/shs \
+    qcom/opensource/datarmnet-ext/wlan \
+    qcom/opensource/display-drivers/msm \
+    qcom/opensource/dsp-kernel \
+    qcom/opensource/graphics-kernel \
+    qcom/opensource/spu-kernel \
+    qcom/opensource/video-driver \
+    qcom/opensource/wlan/platform \
+    qcom/opensource/wlan/qcacld-3.0/.adrastea \
+    qcom/opensource/bt-kernel \
+    nxp/opensource/driver
 
 
 BOARD_VENDOR_RAMDISK_FRAGMENTS := dlkm
