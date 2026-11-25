@@ -136,6 +136,9 @@ DEVICE_FRAMEWORK_COMPATIBILITY_MATRIX_FILE := \
 TARGET_VENDOR_PROP += $(COMMON_PATH)/configs/props/vendor.prop
 TARGET_PRODUCT_PROP += $(COMMON_PATH)/configs/props/product.prop
 
+# Recovery
+TARGET_RECOVERY_FSTAB := $(COMMON_PATH)/init/fstab.qcom
+
 # Init
 TARGET_INIT_VENDOR_LIB := libinit_sm4450
 TARGET_RECOVERY_DEVICE_MODULES := libinit_sm4450

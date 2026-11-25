@@ -201,23 +201,21 @@ $(call soong_config_set,lineage_health,charging_control_charging_disabled,1)
 TARGET_USES_VULKAN := true
 
 # Init
+# Only the pieces our own tree defines as modules live here. Everything else the
+# stock vendor image ships (ueventd.rc, usb_compositions.conf, the IPACM configs,
+# wpa_supplicant.conf, init.qcom.usb.rc/sh) is already installed by
+# sm4450-common-vendor.mk as a copy, and requesting it again as a module would
+# install the same path twice.
 PRODUCT_PACKAGES += \
     fstab.qcom \
-    fstab.qcom.vendor_ramdisk \
     init.kernel.post_boot.sh \
     init.qcom.post_boot.sh \
     init.qcom.rc \
-    init.qcom.recovery.rc \
-    init.target.rc \
-    system_dlkm_modprobe.sh \
-    ueventd.qcom.rc \
-    vendor.qti.qccsyshal_aidl-service.rc
+    init.target.rc
 
 # IPACM
 PRODUCT_PACKAGES += \
-    ipacm \
-    IPACM_cfg.xml \
-    IPACM_Filter_cfg.xml
+    ipacm
 
 # Kernel
 PRODUCT_COPY_FILES += \
@@ -264,9 +262,8 @@ PRODUCT_PACKAGES += \
     libqti-perfd-client
 
 # QSPA
-PRODUCT_PACKAGES += \
-    qspa_vendor.rc \
-    vendor.qti.qspa-service
+# The stock image has no qspa binary or rc file (only sepolicy labels mention
+# it), so there is nothing to ship here.
 
 # Ramdisk
 $(call inherit-product, $(SRC_TARGET_DIR)/product/generic_ramdisk.mk)
@@ -334,12 +331,12 @@ PRODUCT_PACKAGES += \
     android.hardware.thermal-service.qti
 
 # USB
+# init.qcom.usb.rc, init.qcom.usb.sh and usb_compositions.conf come from the
+# vendor blob install (they are stock files, copied verbatim), so only the HAL
+# services are requested here.
 PRODUCT_PACKAGES += \
     android.hardware.usb-service.qti \
-    android.hardware.usb.gadget-service.qti \
-    init.qcom.usb.rc \
-    init.qcom.usb.sh \
-    usb_compositions.conf
+    android.hardware.usb.gadget-service.qti
 
 PRODUCT_SOONG_NAMESPACES += \
     vendor/qcom/opensource/usb/etc
@@ -381,8 +378,7 @@ PRODUCT_PACKAGES += \
     hostapd \
     libwifi-hal-ctrl \
     libwifi-hal-qcom \
-    wpa_supplicant \
-    wpa_supplicant.conf
+    wpa_supplicant
 
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.wifi.aware.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.wifi.aware.xml \

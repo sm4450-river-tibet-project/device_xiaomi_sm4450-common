@@ -1,0 +1,16 @@
+//
+// SPDX-FileCopyrightText: The LineageOS Project
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// fstab.qcom is the only init-side file this tree owns. Every other stock file
+// (init.qcom.rc, init.target.rc, ueventd.rc, the post_boot scripts, the USB rc
+// and script, usb_compositions.conf) is installed verbatim by
+// sm4450-common-vendor.mk, so declaring modules for them here would install the
+// same path twice.
+prebuilt_etc {
+    name: "fstab.qcom",
+    src: "fstab.qcom",
+    vendor: true,
+    vendor_ramdisk_available: true,
+}
