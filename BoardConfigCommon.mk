@@ -136,6 +136,23 @@ DEVICE_FRAMEWORK_COMPATIBILITY_MATRIX_FILE := \
 TARGET_VENDOR_PROP += $(COMMON_PATH)/configs/props/vendor.prop
 TARGET_PRODUCT_PROP += $(COMMON_PATH)/configs/props/product.prop
 
+# A/B
+AB_OTA_UPDATER := true
+AB_OTA_PARTITIONS += \
+    boot \
+    dtbo \
+    odm \
+    product \
+    recovery \
+    system \
+    system_dlkm \
+    system_ext \
+    vbmeta \
+    vbmeta_system \
+    vendor \
+    vendor_boot \
+    vendor_dlkm
+
 # Recovery
 TARGET_RECOVERY_FSTAB := $(COMMON_PATH)/init/fstab.qcom
 
