@@ -122,13 +122,30 @@ TARGET_USES_UEFI := true
 # from the CAF layer is reported as non-existent.
 TARGET_BOARD_PLATFORM := parrot
 
-# BoardConfigQcom.mk derives QCOM_HARDWARE_VARIANT := sm8450 from parrot (it is in
-# UM_5_10_FAMILY and only folds into UM_6_6_FAMILY when TARGET_KERNEL_VERSION is
-# exactly 6.6). sm8450 is also the variant both real sky trees build against, so
-# leave the derivation alone. Do not override QCOM_SOONG_NAMESPACE here: line 442
-# of BoardConfigQcom.mk builds the ipacm namespace from QCOM_HARDWARE_VARIANT, not
-# from QCOM_SOONG_NAMESPACE, so overriding only the latter splits the namespace
-# from the IPA source tree.
+# The device builds against the sm8450-6.6 CAF trees, not the plain sm8450 ones.
+# The stock river JP image ships vendor/bin/hw/android.hardware.audio.service_64,
+# the AIDL audio HAL, and audiohalservice.qti exists only under sm8450-6.6 -- the
+# plain sm8450 tree has no hal/service at all. AUDIO_HAL_DIR below, the vibrator
+# libpalclient namespace and this tree's Android.bp imports all point at
+# sm8450-6.6 for the same reason.
+#
+# BoardConfigQcom.mk would not pick that on its own: parrot is in UM_5_10_FAMILY
+# and qcom_defs.mk only folds that family into UM_6_6_FAMILY when
+# TARGET_KERNEL_VERSION is exactly 6.6. Ours is 6.12, so QCOM_HARDWARE_VARIANT
+# resolves to plain sm8450 and BoardConfigQcom.mk namespaces
+# hardware/qcom-caf/sm8450 alongside the sm8450-6.6 this tree adds in common.mk.
+# Both trees define init.qti.display_boot.rc, audioadsprpcd, libar-pal, libagm
+# and friends, so soong fails with "found in multiple namespaces".
+#
+# QCOM_SOONG_NAMESPACE is `?=`, and the device BoardConfig is parsed from
+# build/make/core/envsetup.mk:367 while BoardConfigLineage.mk (which includes
+# BoardConfigQcom.mk) is included at build/make/core/config.mk:502, so this value
+# is in place first and wins.
+#
+# QCOM_HARDWARE_VARIANT cannot be pinned the same way -- BoardConfigQcom.mk
+# assigns it with plain `:=` inside its if/else chain and would overwrite
+# anything set here.
+QCOM_SOONG_NAMESPACE := hardware/qcom-caf/sm8450-6.6
 
 # WiFi
 # BOARD_WLAN_DEVICE selects the qcacld driver flavour and the private driver
