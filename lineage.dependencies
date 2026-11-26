@@ -1,0 +1,22 @@
+[
+  {
+    "repository": "android_hardware_xiaomi",
+    "target_path": "hardware/xiaomi"
+  },
+  {
+    "repository": "kernel_xiaomi_sky-6.12",
+    "target_path": "kernel/xiaomi/sky"
+  },
+  {
+    "repository": "kernel_xiaomi_sky-devicetrees-6.12",
+    "target_path": "kernel/xiaomi/sky-devicetrees"
+  },
+  {
+    "repository": "kernel_xiaomi_sky-modules",
+    "target_path": "kernel/xiaomi/sky-modules"
+  },
+  {
+    "repository": "vendor_xiaomi_sm4450-common",
+    "target_path": "vendor/xiaomi/sm4450-common"
+  }
+]

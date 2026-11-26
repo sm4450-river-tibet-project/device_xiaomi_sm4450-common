@@ -65,9 +65,18 @@ PRODUCT_PACKAGES += \
     libqcomvisualizer \
     libqcomvoiceprocessing \
     libsndcardparser \
-    libsoundtriggerhal.qti \
     libvolumelistener \
     qtiaudiohalvendorextn
+
+# Sound trigger
+# The stock image ships the HIDL sound-trigger HAL, not the AIDL
+# libsoundtriggerhal.qti (that one belongs to the sm8750/sm8850 generation and
+# targets a newer PAL interface). Both pieces below are prebuilts already
+# declared in vendor/xiaomi/sm4450-common/Android.bp.
+PRODUCT_PACKAGES += \
+    android.hardware.soundtrigger_2.3 \
+    android.hardware.soundtrigger_2.3-impl \
+    sound_trigger.primary.parrot
 
 PRODUCT_PACKAGES += \
     libalsautilsv2.vendor \
@@ -201,21 +210,24 @@ $(call soong_config_set,lineage_health,charging_control_charging_disabled,1)
 TARGET_USES_VULKAN := true
 
 # Init
-# Only the pieces our own tree defines as modules live here. Everything else the
-# stock vendor image ships (ueventd.rc, usb_compositions.conf, the IPACM configs,
-# wpa_supplicant.conf, init.qcom.usb.rc/sh) is already installed by
-# sm4450-common-vendor.mk as a copy, and requesting it again as a module would
-# install the same path twice.
+# Only fstab.qcom is a module this tree owns (init/Android.bp). The stock init
+# scripts -- init.qcom.rc, init.target.rc, init.kernel.post_boot.sh and
+# init.qcom.post_boot.sh -- ship verbatim from the vendor image and are already
+# installed by sm4450-common-vendor.mk as PRODUCT_COPY_FILES entries. They are
+# not soong modules anywhere in the tree, so naming them here asks the build for
+# modules that do not exist.
 PRODUCT_PACKAGES += \
-    fstab.qcom \
-    init.kernel.post_boot.sh \
-    init.qcom.post_boot.sh \
-    init.qcom.rc \
-    init.target.rc
+    fstab.qcom
 
 # IPACM
+# ipacm and its two configs are source modules in
+# hardware/qcom-caf/sm8450/data-ipa-cfg-mgr, which BoardConfigQcom.mk adds to
+# PRODUCT_SOONG_NAMESPACES once BOARD_USES_QCOM_HARDWARE and
+# TARGET_BOARD_PLATFORM are set on the board.
 PRODUCT_PACKAGES += \
-    ipacm
+    ipacm \
+    IPACM_cfg.xml \
+    IPACM_Filter_cfg.xml
 
 # Kernel
 PRODUCT_COPY_FILES += \

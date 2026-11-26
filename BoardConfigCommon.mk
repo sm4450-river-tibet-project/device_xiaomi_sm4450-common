@@ -114,6 +114,62 @@ BOARD_USES_QCOM_HARDWARE := true
 TARGET_USES_QCOM_BSP := true
 TARGET_USES_UEFI := true
 
+# SoC family. BoardConfigQcom.mk (hardware/qcom-caf/common) maps this through
+# qcom_defs.mk to pick QCOM_HARDWARE_VARIANT and to decide which
+# hardware/qcom-caf/* trees become soong namespaces. parrot is in UM_5_10_FAMILY.
+# Without this the lookup falls through to
+# QCOM_HARDWARE_VARIANT := $(TARGET_BOARD_PLATFORM), i.e. empty, and every module
+# from the CAF layer is reported as non-existent.
+TARGET_BOARD_PLATFORM := parrot
+
+# BoardConfigQcom.mk derives QCOM_HARDWARE_VARIANT := sm8450 from parrot (it is in
+# UM_5_10_FAMILY and only folds into UM_6_6_FAMILY when TARGET_KERNEL_VERSION is
+# exactly 6.6). sm8450 is also the variant both real sky trees build against, so
+# leave the derivation alone. Do not override QCOM_SOONG_NAMESPACE here: line 442
+# of BoardConfigQcom.mk builds the ipacm namespace from QCOM_HARDWARE_VARIANT, not
+# from QCOM_SOONG_NAMESPACE, so overriding only the latter splits the namespace
+# from the IPA source tree.
+
+# WiFi
+# BOARD_WLAN_DEVICE selects the qcacld driver flavour and the private driver
+# command libraries (lib_driver_cmd_<device>). WLAN_DEVICE is the in-tree
+# hardware/qcom/wlan backend, qcwcn, matching the wifihal_qcom_defaults backend in
+# hardware/qcom-caf/wlan.
+BOARD_WLAN_DEVICE := qcwcn
+BOARD_HOSTAPD_DRIVER := NL80211
+BOARD_HOSTAPD_PRIVATE_LIB := lib_driver_cmd_$(BOARD_WLAN_DEVICE)
+BOARD_WPA_SUPPLICANT_DRIVER := NL80211
+BOARD_WPA_SUPPLICANT_PRIVATE_LIB := lib_driver_cmd_$(BOARD_WLAN_DEVICE)
+WPA_SUPPLICANT_VERSION := VER_0_8_X
+WIFI_FEATURE_HOSTAPD_11AX := true
+WIFI_FEATURE_SUPPLICANT_11AX := true
+
+# wifihal powers the chip through /dev/wlan using these literals.
+WIFI_DRIVER_STATE_CTRL_PARAM := "/dev/wlan"
+WIFI_DRIVER_STATE_OFF := "OFF"
+WIFI_DRIVER_STATE_ON := "ON"
+
+# One supplicant .rc carrying the hidl-supplicant service entry.
+WIFI_HIDL_UNIFIED_SUPPLICANT_SERVICE_RC_ENTRY := true
+
+# Capabilities the wifihal qcwcn backend reads. The stock sky firmware advertises
+# NAN, concurrent interfaces and dual AP/STA, matching the rest of the SoC family.
+WIFI_HIDL_FEATURE_AWARE := true
+WIFI_HIDL_FEATURE_DUAL_INTERFACE := true
+QC_WIFI_HIDL_FEATURE_DUAL_AP := true
+QC_WIFI_HIDL_FEATURE_DUAL_STA := true
+
+# Not setting WIFI_DRIVER_BUILT/DEFAULT := qca_cld3 yet: modules.list.msm.parrot
+# ships only cfg80211.ko, so there is no qca_cld3_wlan.ko for the driver to come
+# from. Add them once the wlan module is in the vendor_boot module list.
+
+# No BOARD_SUPPORTS_OPENSOURCE_STHAL here on purpose. Enabling it makes
+# BoardConfigQcom.mk namespace vendor/qcom/opensource/audio-hal/st-hal-ar-legacy
+# (the branch parrot takes), and that repo defines a module named
+# sound_trigger.primary.parrot -- the same name as the prebuilt we already ship
+# from the stock image. Two modules, one name, build error. The device uses the
+# stock HIDL sound-trigger HAL, which is installed as a prebuilt.
+
 # Filesystem
 TARGET_FS_CONFIG_GEN := $(COMMON_PATH)/configs/config.fs
 
