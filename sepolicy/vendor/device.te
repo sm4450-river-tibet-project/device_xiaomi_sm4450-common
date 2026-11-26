@@ -1,6 +1,6 @@
 # Xiaomi character devices for sky (Redmi 12 5G)
-# touchfeature_device, vendor_sysfs_touch and vendor_displayfeature_device
-# already exist in the stock vendor CIL, so they are not redeclared here.
+# millet_device is declared here; touchfeature_device,
+# vendor_sysfs_touch and vendor_displayfeature_device are in file.te.
 
 # Millet (Xiaomi performance framework)
 type millet_device, dev_type;
