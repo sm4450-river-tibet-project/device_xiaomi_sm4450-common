@@ -1,8 +1,8 @@
 # Xiaomi-specific file types for sky (Redmi 12 5G)
 #
-# Types consumed by the stock vendor sepolicy are declared in the vendor CIL
-# blob (vendor/etc/selinux/vendor_sepolicy.cil), so only Xiaomi additions that
-# the blob list installs belong here.
+# The stock vendor image does not ship a vendor_sepolicy.cil that this tree
+# installs, so every type referenced by our genfs_contexts / file_contexts
+# must be declared here. Do not assume a type already exists upstream.
 
 # Display
 type vendor_sysfs_displayfeature, fs_type, sysfs_type;
