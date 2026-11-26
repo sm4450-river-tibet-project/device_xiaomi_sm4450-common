@@ -7,6 +7,7 @@
 COMMON_PATH := device/xiaomi/sm4450-common
 
 # Architecture
+# 64-bit only: see device/xiaomi/sky/BoardConfig.mk for why 32-bit is dropped.
 TARGET_ARCH := arm64
 TARGET_ARCH_VARIANT := armv8-a-branchprot
 TARGET_CPU_ABI := arm64-v8a
@@ -14,12 +15,8 @@ TARGET_CPU_ABI2 :=
 TARGET_CPU_VARIANT := generic
 TARGET_CPU_VARIANT_RUNTIME := kryo
 
-TARGET_2ND_ARCH := arm
-TARGET_2ND_ARCH_VARIANT := armv8-2a
-TARGET_2ND_CPU_ABI := armeabi-v7a
-TARGET_2ND_CPU_ABI2 := armeabi
-TARGET_2ND_CPU_VARIANT := generic
-TARGET_2ND_CPU_VARIANT_RUNTIME := cortex-a55
+TARGET_SUPPORTS_64_BIT_APPS := true
+TARGET_SUPPORTS_32_BIT_APPS := false
 
 # Bootloader
 TARGET_BOOTLOADER_BOARD_NAME := parrot
