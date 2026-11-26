@@ -220,14 +220,12 @@ PRODUCT_PACKAGES += \
     fstab.qcom
 
 # IPACM
-# ipacm and its two configs are source modules in
-# hardware/qcom-caf/sm8450/data-ipa-cfg-mgr, which BoardConfigQcom.mk adds to
-# PRODUCT_SOONG_NAMESPACES once BOARD_USES_QCOM_HARDWARE and
-# TARGET_BOARD_PLATFORM are set on the board.
-PRODUCT_PACKAGES += \
-    ipacm \
-    IPACM_cfg.xml \
-    IPACM_Filter_cfg.xml
+# The device uses the IPA stack the stock image ships, not the CAF source ipacm.
+# The CAF tree defines liboffloadhal, which the vendor repo also ships as a
+# prebuilt of the stock blob, so both cannot be in the build. The stock side is
+# already complete in the vendor repo: ipacm_bin and ipacm-diag_bin
+# (sm4450-common-vendor.mk:462-463), libipanat (:686), liboffloadhal
+# (Android.bp:16162) and both XMLs (:1591-1592).
 
 # Kernel
 PRODUCT_COPY_FILES += \

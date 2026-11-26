@@ -147,6 +147,16 @@ TARGET_BOARD_PLATFORM := parrot
 # anything set here.
 QCOM_SOONG_NAMESPACE := hardware/qcom-caf/sm8450-6.6
 
+# Do not let BoardConfigQcom.mk add hardware/qcom-caf/$(QCOM_HARDWARE_VARIANT)/
+# data-ipa-cfg-mgr to PRODUCT_SOONG_NAMESPACES. That tree defines liboffloadhal,
+# and the vendor repo ships the same name as a prebuilt of the stock blob, so
+# soong reports it in two namespaces. The device runs the stock IPA stack
+# (ipacm_bin, libipanat, liboffloadhal, both IPACM XMLs -- all declared in the
+# vendor repo), so the CAF source ipacm is not wanted. This is the only place the
+# variable is read; QCOM_HARDWARE_VARIANT itself cannot be pinned because
+# BoardConfigQcom.mk assigns it with plain := inside its if/else chain.
+USE_DEVICE_SPECIFIC_DATA_IPA_CFG_MGR := true
+
 # WiFi
 # BOARD_WLAN_DEVICE selects the qcacld driver flavour and the private driver
 # command libraries (lib_driver_cmd_<device>). WLAN_DEVICE is the in-tree
