@@ -1,10 +1,3 @@
-# SPDX-License-Identifier: GPL-2.0-only
-# System DLKM modules for this device.
-#
-# Every entry below was checked against the kernel tree and has a
-# real build target, so the list cannot name a module that will not
-# be produced. Generic virtio, ppp, can and 802.15.4 modules are
-# omitted because this platform's kernel overlay does not build them.
 gzvm.ko
 zsmalloc.ko
 libarc4.ko
