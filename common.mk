@@ -74,7 +74,6 @@ PRODUCT_PACKAGES += \
 # targets a newer PAL interface). Both pieces below are prebuilts already
 # declared in vendor/xiaomi/sm4450-common/Android.bp.
 PRODUCT_PACKAGES += \
-    android.hardware.soundtrigger_2.3 \
     android.hardware.soundtrigger_2.3-impl \
     sound_trigger.primary.parrot
 
