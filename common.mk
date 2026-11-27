@@ -71,10 +71,9 @@ PRODUCT_PACKAGES += \
 # Sound trigger
 # The stock image ships the HIDL sound-trigger HAL, not the AIDL
 # libsoundtriggerhal.qti (that one belongs to the sm8750/sm8850 generation and
-# targets a newer PAL interface). Both pieces below are prebuilts already
-# declared in vendor/xiaomi/sm4450-common/Android.bp.
+# targets a newer PAL interface). The interface and its -impl are built from
+# hardware/interfaces/soundtrigger/2.3, so only the DSP blob is listed here.
 PRODUCT_PACKAGES += \
-    android.hardware.soundtrigger_2.3-impl \
     sound_trigger.primary.parrot
 
 PRODUCT_PACKAGES += \
