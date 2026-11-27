@@ -37,6 +37,13 @@ BOARD_RAMDISK_USE_LZ4 := true
 TARGET_NEEDS_DTBOIMAGE := true
 BOARD_USES_QCOM_MERGE_DTBS_SCRIPT := true
 
+# merge_dtbs flow: dtb.img is built first (it creates DTB_OBJ/{base,out} and
+# runs merge_dtbs.py), and dtbo.img then packs the *.dtbo that flow produced.
+# Without BOARD_INCLUDE_DTB_IN_BOOTIMG the dtb.img rule never runs, so
+# DTB_OBJ/out does not exist and mkdtboimg gets an empty file list.
+BOARD_INCLUDE_DTB_IN_BOOTIMG := true
+TARGET_KERNEL_DTB := dtbs
+
 TARGET_KERNEL_SOURCE := kernel/xiaomi/sky
 TARGET_KERNEL_VERSION := 6.12
 TARGET_KERNEL_ADDITIONAL_FLAGS := TARGET_PRODUCT=$(PRODUCT_DEVICE)
